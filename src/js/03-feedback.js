@@ -1,4 +1,4 @@
-const form = document.querySelector('feedback-form');
+const form = document.querySelector('form.input#email');
 const output = document.querySelector('#output');
 const LOCALSTORAGE_KEY = 'example';
 
