@@ -24,3 +24,6 @@ document.querySelector('ul.gallery').insertAdjacentHTML('afterbegin', markup);
 (function () {
   new SimpleLightbox('.gallery a', { captionDelay: 250, captionsData: 'alt' });
 })();
+
+
+

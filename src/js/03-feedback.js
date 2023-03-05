@@ -1,10 +1,10 @@
-const inputData = document.getElementById('input').value;
-const textareaData = document.getElementById('textarea').value;
 const LOCALSTORAGE_KEY = 'feedback-form-state';
 
 function saveData(evt) {
   evt.preventDefault();
-  localStorage.setItem('inputData', inputData);
+  const inputData = document.getElementById('input').value;
+  const textareaData = document.getElementById('textarea').value;
+  localStorage.setItem('feedback-form-state', inputData);
   localStorage.setItem('textareaData', textareaData);
 
   alert('Dane zostały zapisane!');
@@ -30,3 +30,21 @@ function saveData(evt) {
 // function updateOutput() {
 //   input.textContent = localStorage.getItem(LOCALSTORAGE_KEY) || '';
 // }
+
+const messageInput = document.querySelector('.feedback-form');
+
+messageInput.addEventListener('input', handleSubmit);
+
+function handleSubmit(event) {
+  event.preventDefault();
+  const {
+    elements: { email, message },
+  } = event.currentTarget;
+
+  // if (email.value === '' || message.value === '') {
+  //   return alert('Please fill in all the fields!');
+  // }
+
+  console.log(`Email: ${email.value}, Message: ${message.value}`);
+  event.currentTarget.reset();
+}
