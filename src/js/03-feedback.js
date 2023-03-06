@@ -24,7 +24,7 @@ function saveData(evt) {
 const formValue = document.querySelector('.feedback-form');
 
 formValue.addEventListener('input', throttle(collectFormData, 500));
-//osobiście bym zmieniła te 500 milisekund na 2sec. albo sec.>2sec.
+//osobiście bym zmieniła te 500 milisekund na 2sec. albo xsec.>2sec.
 formValue.addEventListener('submit', saveData);
 
 function collectFormData() {
