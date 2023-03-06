@@ -1,50 +1,35 @@
+import throttle from 'lodash.throttle';
+
 const LOCALSTORAGE_KEY = 'feedback-form-state';
+const inputData = document.getElementById('input');
+const textareaData = document.getElementById('textarea');
+const savedData = localStorage.getItem(LOCALSTORAGE_KEY);
+const parsedData = JSON.parse(savedData);
+
+if (parsedData !== null) {
+  document.getElementById('input').value = parsedData.email;
+  document.getElementById('textarea').value = parsedData.message;
+}
 
 function saveData(evt) {
   evt.preventDefault();
-  const inputData = document.getElementById('input').value;
-  const textareaData = document.getElementById('textarea').value;
-  localStorage.setItem('feedback-form-state', inputData);
-  localStorage.setItem('textareaData', textareaData);
 
-  alert('Dane zostały zapisane!');
+  localStorage.removeItem(LOCALSTORAGE_KEY);
+  console.log(`Email: ${inputData.value}, Message: ${textareaData.value}`);
+  evt.currentTarget.reset();
+
+  alert('Dane zostały wysłane!');
 }
 
-// const form = document.querySelector('form.input#email');
-// const input = document.querySelector('#input');
-// const textarea = document.querySelector('#textarea');
+const formValue = document.querySelector('.feedback-form');
 
-// const LOCALSTORAGE_KEY = 'feedback-form-state';
-// console.log(input);
+formValue.addEventListener('input', throttle(collectFormData, 500));
+//osobiście bym zmieniła te 500 milisekund na 2sec. albo sec.>2sec.
+formValue.addEventListener('submit', saveData);
 
-// updateOutput();
-// form.addEventListener('submit', saveMessage);
+function collectFormData() {
+  const object = { email: inputData.value, message: textareaData.value };
+  localStorage.setItem('feedback-form-state', JSON.stringify(object));
 
-// function saveMessage(evt) {
-//   evt.preventDefault();
-//   localStorage.setItem(LOCALSTORAGE_KEY, form.elements.message.value);
-//   updateOutput();
-//   form.reset();
-// }
-
-// function updateOutput() {
-//   input.textContent = localStorage.getItem(LOCALSTORAGE_KEY) || '';
-// }
-
-const messageInput = document.querySelector('.feedback-form');
-
-messageInput.addEventListener('input', handleSubmit);
-
-function handleSubmit(event) {
-  event.preventDefault();
-  const {
-    elements: { email, message },
-  } = event.currentTarget;
-
-  // if (email.value === '' || message.value === '') {
-  //   return alert('Please fill in all the fields!');
-  // }
-
-  console.log(`Email: ${email.value}, Message: ${message.value}`);
-  event.currentTarget.reset();
+  console.log(`Email: ${inputData.value}, Message: ${textareaData.value}`);
 }
